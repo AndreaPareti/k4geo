@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lccdd>
+  <properties>
+    <!-- Same constant indices and optical energy endpoints as IDEA option 2.
+         Two endpoints suffice for its constant refractive-index tables.
+         Attenuation and PE conversion remain in the unchanged IDEA SD helper. -->
+    <matrix name="HidraPMMA_RINDEX" coldim="2" values="1.37760*eV 1.49 4.13281*eV 1.49"/>
+    <matrix name="HidraClad_RINDEX" coldim="2" values="1.37760*eV 1.42 4.13281*eV 1.42"/>
+  </properties>
+  <materials>
+    <!-- Capillary material from the active standalone prototype, not IDEA's brass. -->
+    <material name="HidraSteel304">
+      <D type="density" unit="g/cm3" value="7.93"/>
+      <fraction n="0.68" ref="Fe"/>
+      <fraction n="0.20" ref="Cr"/>
+      <fraction n="0.12" ref="Ni"/>
+    </material>
+    <material name="HidraPolystyrene">
+      <D type="density" unit="g/cm3" value="1.05"/>
+      <composite n="8" ref="C"/>
+      <composite n="8" ref="H"/>
+      <!-- IDEA computes scintillation from energy deposits; no optical scintillation. -->
+    </material>
+    <material name="HidraPMMAScin">
+      <D type="density" unit="g/cm3" value="1.19"/>
+      <composite n="5" ref="C"/>
+      <composite n="2" ref="O"/>
+      <composite n="8" ref="H"/>
+    </material>
+    <material name="HidraPMMA">
+      <D type="density" unit="g/cm3" value="1.19"/>
+      <composite n="5" ref="C"/>
+      <composite n="2" ref="O"/>
+      <composite n="8" ref="H"/>
+      <property name="RINDEX" ref="HidraPMMA_RINDEX"/>
+    </material>
+    <material name="HidraFluorinatedPolymer">
+      <D type="density" unit="g/cm3" value="1.43"/>
+      <composite n="2" ref="C"/>
+      <composite n="2" ref="F"/>
+      <property name="RINDEX" ref="HidraClad_RINDEX"/>
+    </material>
+  </materials>
+</lccdd>

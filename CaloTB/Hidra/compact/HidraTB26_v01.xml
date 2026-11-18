@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lccdd>
+  <info name="HidraTB26_v01" title="HiDRa TB26 80-module test-beam geometry"
+        author="HiDRa collaboration" url="https://github.com/key4hep/k4geo"
+        status="development" version="v01">
+    <comment>Centred, unrotated TB26 layout: 80 wall-free modules and the unchanged IDEA signal action.</comment>
+  </info>
+
+  <include ref="${DD4hepINSTALL}/DDDetectors/compact/detector_types.xml"/>
+  <includes>
+    <gdmlFile ref="${DD4hepINSTALL}/DDDetectors/compact/elements.xml"/>
+    <gdmlFile ref="${DD4hepINSTALL}/DDDetectors/compact/materials.xml"/>
+  </includes>
+  <!-- DD4hep creates the world before processing included compact descriptions. -->
+  <define>
+    <constant name="world_x" value="10*m"/>
+    <constant name="world_y" value="10*m"/>
+    <constant name="world_z" value="10*m"/>
+  </define>
+  <include ref="dimensions.xml"/>
+  <include ref="materials.xml"/>
+
+  <display>
+    <vis name="HidraEnvelopeVis" visible="false" showDaughters="true"/>
+    <vis name="HidraAirVis" visible="false" showDaughters="true"/>
+    <vis name="HidraTubeVis" visible="true" showDaughters="true" alpha="1.0" r="0.6" g="0.6" b="0.6"/>
+    <vis name="HidraScinVis" visible="true" showDaughters="true" r="0.1" g="0.2" b="0.9"/>
+    <vis name="HidraCherVis" visible="true" showDaughters="true" r="0.9" g="0.2" b="0.1"/>
+  </display>
+
+  <!-- Keep detector construction in the last include, after its constants. -->
+  <include ref="prototype_tb26.xml"/>
+</lccdd>

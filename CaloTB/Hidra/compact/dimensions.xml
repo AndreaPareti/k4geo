@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lccdd>
+  <define>
+    <!-- Full outer navigation-envelope sizes; these are not module walls. -->
+    <constant name="HidraEnvelopeSizeX" value="1*m"/>
+    <constant name="HidraEnvelopeSizeY" value="1*m"/>
+    <constant name="HidraEnvelopeSizeZ" value="3*m"/>
+
+    <!-- One module from the active standalone HidraSim configuration. -->
+    <constant name="HidraModuleLength" value="2500*mm"/>
+    <constant name="HidraTubeOuterRadius" value="1.0*mm"/>
+    <constant name="HidraCladdingOuterRadius" value="0.50*mm"/>
+    <constant name="HidraCoreOuterRadius" value="0.485*mm"/>
+    <constant name="HidraFiberColumns" value="64"/>
+    <constant name="HidraFiberRows" value="16"/>
+
+    <!-- Exact hexagonal packing: no module separation or support thickness. -->
+    <constant name="HidraModulePitchX" value="2*HidraFiberColumns*HidraTubeOuterRadius"/>
+    <constant name="HidraModulePitchY" value="sqrt(3)*HidraFiberRows*HidraTubeOuterRadius"/>
+  </define>
+</lccdd>

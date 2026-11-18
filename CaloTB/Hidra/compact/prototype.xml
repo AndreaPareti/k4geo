@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lccdd>
+  <readouts>
+    <readout name="HidraPrototypeRO">
+      <!-- IDEA barrel fields. Cells are physical fibres, not an extra XY grid. -->
+      <id>system:5,stave:10,tower:-8,air:6,col:-16,row:16,clad:1,core:1,cherenkov:1</id>
+      <segmentation type="NoSegmentation"/>
+    </readout>
+  </readouts>
+  <detectors>
+    <detector name="HidraPrototype" type="HidraPrototype_v01" id="1"
+              readout="HidraPrototypeRO" vis="HidraEnvelopeVis">
+      <!-- BARREL selects the existing action's hierarchy decoder, not a cylindrical layout. -->
+      <type_flags type="DetType_CALORIMETER + DetType_HADRONIC + DetType_BARREL"/>
+      <dimensions x="HidraEnvelopeSizeX" y="HidraEnvelopeSizeY" z="HidraEnvelopeSizeZ"/>
+      <module length="HidraModuleLength" rows="HidraFiberRows" columns="HidraFiberColumns">
+        <capillary material="HidraSteel304" outer_r="HidraTubeOuterRadius" vis="HidraTubeVis"/>
+        <scin_clad material="HidraPMMAScin" outer_r="HidraCladdingOuterRadius" vis="HidraAirVis"/>
+        <scin_core material="HidraPolystyrene" outer_r="HidraCoreOuterRadius" vis="HidraScinVis"/>
+        <cher_clad material="HidraFluorinatedPolymer" outer_r="HidraCladdingOuterRadius" vis="HidraAirVis"/>
+        <cher_core material="HidraPMMA" outer_r="HidraCoreOuterRadius" vis="HidraCherVis"/>
+      </module>
+    </detector>
+  </detectors>
+</lccdd>

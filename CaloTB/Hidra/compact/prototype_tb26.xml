@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lccdd>
+  <readouts>
+    <readout name="HidraPrototypeRO">
+      <!-- IDEA barrel fields. Cells are physical fibres, not an extra XY grid. -->
+      <id>system:5,stave:10,tower:-8,air:6,col:-16,row:16,clad:1,core:1,cherenkov:1</id>
+      <segmentation type="NoSegmentation"/>
+    </readout>
+  </readouts>
+  <detectors>
+    <detector name="HidraPrototype" type="HidraPrototype_v01" id="1"
+              readout="HidraPrototypeRO" vis="HidraEnvelopeVis">
+      <!-- BARREL selects the existing action's hierarchy decoder, not a cylindrical layout. -->
+      <type_flags type="DetType_CALORIMETER + DetType_HADRONIC + DetType_BARREL"/>
+      <dimensions x="HidraEnvelopeSizeX" y="HidraEnvelopeSizeY" z="HidraEnvelopeSizeZ"/>
+      <!-- TB26 map from HidraSim/include/DREMTubesGeoPar.hh. Row index increases
+           with global y; column index increases toward negative global x.
+           -1 denotes an empty grid slot. No rotations or platform offsets. -->
+      <layout columns="5" rows="20" expected_modules="80">
+        <row ids="-1 -1  0 -1 -1"/>
+        <row ids="-1  1  2  3 -1"/>
+        <row ids="-1  4  5  6 -1"/>
+        <row ids="-1  7  8  9 -1"/>
+        <row ids="10 11 12 13 14"/>
+        <row ids="15 16 17 18 19"/>
+        <row ids="20 21 22 23 24"/>
+        <row ids="25 26 27 28 29"/>
+        <row ids="30 31 32 33 34"/>
+        <row ids="35 36 37 38 39"/>
+        <row ids="40 41 42 43 44"/>
+        <row ids="45 46 47 48 49"/>
+        <row ids="50 51 52 53 54"/>
+        <row ids="55 56 57 58 59"/>
+        <row ids="60 61 62 63 64"/>
+        <row ids="65 66 67 68 69"/>
+        <row ids="-1 70 71 72 -1"/>
+        <row ids="-1 73 74 75 -1"/>
+        <row ids="-1 76 77 78 -1"/>
+        <row ids="-1 -1 79 -1 -1"/>
+      </layout>
+      <module length="HidraModuleLength" rows="HidraFiberRows" columns="HidraFiberColumns">
+        <capillary material="HidraSteel304" outer_r="HidraTubeOuterRadius" vis="HidraTubeVis"/>
+        <scin_clad material="HidraPMMAScin" outer_r="HidraCladdingOuterRadius" vis="HidraAirVis"/>
+        <scin_core material="HidraPolystyrene" outer_r="HidraCoreOuterRadius" vis="HidraScinVis"/>
+        <cher_clad material="HidraFluorinatedPolymer" outer_r="HidraCladdingOuterRadius" vis="HidraAirVis"/>
+        <cher_core material="HidraPMMA" outer_r="HidraCoreOuterRadius" vis="HidraCherVis"/>
+      </module>
+    </detector>
+  </detectors>
+</lccdd>

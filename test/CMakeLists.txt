@@ -239,3 +239,73 @@ set(test_environment "LD_LIBRARY_PATH=${PROJECT_BINARY_DIR}/lib:$ENV{LD_LIBRARY_
 get_property(test_names DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY TESTS)
 set_tests_properties(${test_names} PROPERTIES ENVIRONMENT "${test_environment}"
                                               FAIL_REGULAR_EXPRESSION " Exception; EXCEPTION;ERROR;Error")
+
+# HiDRa: wall-free module geometry, unchanged IDEA signal action and output checks.
+add_test(NAME test_HidraPrototype_v01_geometry
+  COMMAND ${Python_EXECUTABLE} ${PROJECT_SOURCE_DIR}/CaloTB/Hidra/tests/validate_geometry.py
+    ${PROJECT_SOURCE_DIR}/CaloTB/Hidra/compact/HidraPrototype_v01.xml)
+set_tests_properties(test_HidraPrototype_v01_geometry PROPERTIES LABELS Hidra TIMEOUT 120)
+
+add_ddsim_gun_test(${PROJECT_SOURCE_DIR}/CaloTB/Hidra/compact/HidraPrototype_v01.xml
+  NAME test_HidraPrototype_v01_simulation
+  EXTRA_ARGS --steeringFile=${PROJECT_SOURCE_DIR}/CaloTB/Hidra/run_sim/steering.py
+    --random.seed 12345
+  PROPERTIES LABELS Hidra TIMEOUT 120
+    FIXTURES_SETUP HidraPrototype_v01_output
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+
+add_test(NAME test_HidraPrototype_v01_signals
+  COMMAND ${Python_EXECUTABLE} ${PROJECT_SOURCE_DIR}/CaloTB/Hidra/tests/validate_signals.py
+    ${CMAKE_CURRENT_BINARY_DIR}/testHidraPrototype_v01.edm4hep.root)
+set_tests_properties(test_HidraPrototype_v01_signals PROPERTIES
+  LABELS Hidra TIMEOUT 120 FIXTURES_REQUIRED HidraPrototype_v01_output)
+
+# TB26: full 80-module reference map, physical boundaries and multi-module output.
+add_test(NAME test_HidraTB26_v01_geometry
+  COMMAND ${Python_EXECUTABLE} ${PROJECT_SOURCE_DIR}/CaloTB/Hidra/tests/validate_tb26.py
+    ${PROJECT_SOURCE_DIR}/CaloTB/Hidra/compact/HidraTB26_v01.xml
+    ${CMAKE_CURRENT_BINARY_DIR}/HidraTB26_module_map.svg)
+set_tests_properties(test_HidraTB26_v01_geometry PROPERTIES LABELS Hidra TIMEOUT 300)
+
+add_ddsim_gun_test(${PROJECT_SOURCE_DIR}/CaloTB/Hidra/compact/HidraTB26_v01.xml
+  NAME test_HidraTB26_v01_simulation
+  EXTRA_ARGS --steeringFile=${PROJECT_SOURCE_DIR}/CaloTB/Hidra/run_sim/steering.py
+    --random.seed 12345
+  PROPERTIES LABELS Hidra TIMEOUT 300 FIXTURES_SETUP HidraTB26_v01_output
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+
+add_test(NAME test_HidraTB26_v01_signals
+  COMMAND ${Python_EXECUTABLE} ${PROJECT_SOURCE_DIR}/CaloTB/Hidra/tests/validate_signals.py
+    ${CMAKE_CURRENT_BINARY_DIR}/testHidraTB26_v01.edm4hep.root 80)
+set_tests_properties(test_HidraTB26_v01_signals PROPERTIES
+  LABELS Hidra TIMEOUT 120 FIXTURES_REQUIRED HidraTB26_v01_output)
+
+add_test(NAME test_HidraTB26_v01_display
+  COMMAND ${Python_EXECUTABLE} ${PROJECT_SOURCE_DIR}/CaloTB/Hidra/run_sim/display.py
+    --xml ${PROJECT_SOURCE_DIR}/CaloTB/Hidra/compact/HidraTB26_v01.xml --details --check-scene)
+set_tests_properties(test_HidraTB26_v01_display PROPERTIES LABELS Hidra TIMEOUT 300)
+
+# Module-outline display uses actual placed tower polygons and no tube/fibre meshes.
+add_test(NAME test_HidraTB26_v01_module_borders
+  COMMAND ${Python_EXECUTABLE} ${PROJECT_SOURCE_DIR}/CaloTB/Hidra/run_sim/display.py
+    --xml ${PROJECT_SOURCE_DIR}/CaloTB/Hidra/compact/HidraTB26_v01.xml
+    --module-borders --check-scene)
+set_tests_properties(test_HidraTB26_v01_module_borders PROPERTIES LABELS Hidra TIMEOUT 120)
+
+add_test(NAME test_HidraPrototype_v01_module_borders
+  COMMAND ${Python_EXECUTABLE} ${PROJECT_SOURCE_DIR}/CaloTB/Hidra/run_sim/display.py
+    --xml ${PROJECT_SOURCE_DIR}/CaloTB/Hidra/compact/HidraPrototype_v01.xml
+    --module-borders --check-scene)
+set_tests_properties(test_HidraPrototype_v01_module_borders PROPERTIES LABELS Hidra TIMEOUT 120)
+
+add_test(NAME test_HidraTB26_v01_solid_modules
+  COMMAND ${Python_EXECUTABLE} ${PROJECT_SOURCE_DIR}/CaloTB/Hidra/run_sim/display.py
+    --xml ${PROJECT_SOURCE_DIR}/CaloTB/Hidra/compact/HidraTB26_v01.xml
+    --modules --check-scene)
+set_tests_properties(test_HidraTB26_v01_solid_modules PROPERTIES LABELS Hidra TIMEOUT 120)
+
+add_test(NAME test_HidraPrototype_v01_solid_modules
+  COMMAND ${Python_EXECUTABLE} ${PROJECT_SOURCE_DIR}/CaloTB/Hidra/run_sim/display.py
+    --xml ${PROJECT_SOURCE_DIR}/CaloTB/Hidra/compact/HidraPrototype_v01.xml
+    --modules --check-scene)
+set_tests_properties(test_HidraPrototype_v01_solid_modules PROPERTIES LABELS Hidra TIMEOUT 120)
